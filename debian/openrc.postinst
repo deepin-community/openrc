@@ -1,0 +1,81 @@
+#!/bin/sh
+
+set -e
+
+# Remove diverts made by 0.20.4-1
+if [ "$(dpkg-divert --list /usr/sbin/invoke-rc.d)" = \
+     "diversion of /usr/sbin/invoke-rc.d to /usr/sbin/invoke-rc.d.init-system-helpers by openrc" ]
+	then dpkg-divert --package openrc --remove --rename \
+		--divert /usr/sbin/invoke-rc.d.init-system-helpers /usr/sbin/invoke-rc.d
+fi
+if [ "$(dpkg-divert --list /usr/sbin/update-rc.d)" = \
+     "diversion of /usr/sbin/update-rc.d to /usr/sbin/update-rc.d.init-system-helpers by openrc" ]
+	then dpkg-divert --package openrc --remove --rename \
+		--divert /usr/sbin/update-rc.d.init-system-helpers /usr/sbin/update-rc.d
+fi
+
+
+if [ "${1}" = "configure" ] ; then
+	echo "Add existing services ..."
+
+	for rl in 1 2 S; do
+		[ -d /etc/rc${rl}.d ] || continue
+
+		for f in $(ls -1 /etc/rc${rl}.d | egrep 'S[[:digit:]]{2}*'); do
+			rclink=/etc/rc${rl}.d/${f}
+			initsh=$(readlink -f ${rclink})
+			svc=$(basename ${initsh})
+			if [ -f ${initsh} ]; then
+				case ${rl} in
+				1) orl="recovery" ;;
+				2) orl="default" ;;
+				S) orl="sysinit" ;;
+				esac
+				rc-update add ${svc} ${orl}
+			else
+				echo "*** WARNING: dangling link $rclink"
+				echo $dsvcs|grep -qw ${svc} || dsvcs="$dsvcs ${svc}"
+			fi
+		done
+	done
+
+	[ -d /etc/rc6.d ] && for f in $(ls -1 /etc/rc6.d | egrep 'K[[:digit:]]{2}*'); do
+		rclink=/etc/rc6.d/${f}
+		initsh=$(readlink -f ${rclink})
+		svc=$(basename ${initsh})
+		if [ -f ${initsh} ]; then
+			# reboot is managed by /etc/init.d/rc
+			[ ${svc} = reboot ] && continue
+
+			# no need to duplicate services in the off runlevel
+			egrep -q '# Default-Start:\s+[S12345]' ${initsh} && continue
+			rc-update add ${svc} off
+		else
+			echo "*** WARNING: dangling link $rclink"
+			echo $dsvcs|grep -qw ${svc} || dsvcs="$dsvcs ${svc}"
+		fi
+	done
+
+	rc-update add savecache off
+	rc-update add cgroups sysinit
+	rc-update -u
+
+	if [ "$dsvcs" != "" ]; then
+		echo "**********************************************************************"
+		echo "*** WARNING: Found the following dangling links:"
+		for link in $dsvcs; do
+			ls -l /etc/rc*.d/*$link
+		done
+		echo "**********************************************************************"
+	fi
+
+	echo "**********************************************************************"
+	echo "*** WARNING: if you are replacing sysv-rc by OpenRC, then you must ***"
+	echo "*** reboot immediately using the following command:                ***"
+	echo 'for file in /etc/rc0.d/K*; do s=`basename $(readlink "$file")` ; /etc/init.d/$s stop; done'
+	echo "**********************************************************************"
+fi
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,2 @@
+version=3
+https://github.com/OpenRC/openrc/tags /OpenRC/openrc/archive/(\d[\.\d]+)\.tar\.gz

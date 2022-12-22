@@ -1,0 +1,396 @@
+openrc (0.42-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Make -dev package symlinks in /usr/lib target shared libraries in
+    /lib.  (Closes: #985509).
+
+ -- Mark Hindley <leepen@debian.org>  Fri, 02 Apr 2021 11:16:00 +0100
+
+openrc (0.42-2) unstable; urgency=medium
+
+  * Team upload.
+  * Grab a fix for FTBFS on gcc-10 from upstream. (Closes: #957642)
+
+ -- Adam Borowski <kilobyte@angband.pl>  Fri, 27 Nov 2020 09:48:35 +0100
+
+openrc (0.42-1) unstable; urgency=medium
+
+  * New upstream release, drop ppc64/riscv patches. (Closes: #958820)
+  * Keep cgroups script and rewrite rules in regex. (Closes: #960183)
+  * Add lintian overrides for openrc specific scripts.
+  * Move .so symlinks to /usr/lib.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Fri, 15 May 2020 15:01:39 +0800
+
+openrc (0.40.3-2) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Helmut Grohne ]
+  * Defer stripping to dh_strip. (Closes: #956715)
+
+  [ Adam Borowski ]
+  * Drop myself from uploaders.
+  * Drop Pre-Dep on pre-Stretch init-system-helpers.
+
+ -- Adam Borowski <kilobyte@angband.pl>  Tue, 14 Apr 2020 18:17:58 +0200
+
+openrc (0.40.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Fix ELF hardening.
+
+ -- Mo Zhou <cdluminate@gmail.com>  Sat, 02 Feb 2019 15:41:07 +0000
+
+openrc (0.39-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: 911946).
+  * Introduce Mo Zhou to the maintainer team.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Sat, 27 Oct 2018 11:57:22 +0800
+
+openrc (0.38-2) unstable; urgency=medium
+
+  [ Benda Xu ]
+  * Upload a new version to recover Version 0.34-3.
+    It was my mistake by not basing the new upstream release 0.38-1 on
+    the latest maintenance repository.
+
+  [ Ondřej Nový ]
+  * d/copyright: Use https protocol in Format field
+  * d/changelog: Remove trailing whitespaces
+
+ -- Benda Xu <heroxbd@gentoo.org>  Mon, 22 Oct 2018 08:29:17 +0800
+
+openrc (0.38-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Rebase, merge and drop patches.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Sun, 21 Oct 2018 18:40:30 +0800
+
+openrc (0.34-3) unstable; urgency=medium
+
+  * Switch maintainer address to something that doesn't bounce.
+    (Closes: #899777)
+  * Use dh compat 11.
+
+ -- Adam Borowski <kilobyte@angband.pl>  Thu, 24 May 2018 13:28:14 +0200
+
+openrc (0.34-2) unstable; urgency=medium
+
+  [ Benda Xu ]
+  * Set priority to optional as per standard recommendation.
+  * Move libeinfo and librc to the "libs" section.
+  * Update git fields to salsa.d.o pages.
+
+  [ Svante Signell ]
+  * Fix FTBFS on hurd. (Closes: #891530)
+
+  [ Adam Borowski ]
+  * Add bogus LSB headers to savecache to silence an insserv warning.
+  * Don't use -march=native.
+  * Fix FTBFS on riscv64.
+  * Put the global wildcard first in debian/copyright.
+  * Switch Vcs to unauthenticated.
+  * Set libraries as M-A: same, main package as M-A: foreign.
+  * Rules-Requires-Root: no.
+
+ -- Adam Borowski <kilobyte@angband.pl>  Tue, 10 Apr 2018 00:24:56 +0200
+
+openrc (0.34-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Scan /etc/insserv.conf.d directory. (Bug #874790)
+  * Merge 0.27-2 update into the main patch. Force _GNU_SOURCES.
+  * Remove Roger Leigh from the Uploaders. Thank you Roger for the
+    groundbreaking work. (Bug #869347)
+  * Save deptree on shutdown. Revert upstream commit b02ff466fa75.
+  * Bump standard to 4.1.3.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Sat, 17 Feb 2018 19:11:06 +0900
+
+openrc (0.27-3) unstable; urgency=medium
+
+  * Fix FTBFS on ppc64el with current binutils.
+
+ -- Adam Borowski <kilobyte@angband.pl>  Sat, 25 Nov 2017 06:47:30 +0100
+
+openrc (0.27-2) unstable; urgency=critical
+
+  * Fix segfault with glibc 2.25 in librc; this made systems using openrc
+    effectively unbootable.
+
+ -- Adam Borowski <kilobyte@angband.pl>  Sun, 19 Nov 2017 04:38:32 +0100
+
+openrc (0.27-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop /proc/mounts patch: accepted upstream.
+  * Ship more documentation.
+  * Bump standard to 4.0.0.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Tue, 04 Jul 2017 22:47:13 +0900
+
+openrc (0.23-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Read /proc/mounts in mountinfo. (Bug #847281)
+
+ -- Benda Xu <heroxbd@gentoo.org>  Thu, 05 Jan 2017 01:15:03 +0900
+
+openrc (0.22-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Manage reboot/halt by /etc/init.d/rc. (Closes: #844685)
+
+ -- Benda Xu <heroxbd@gentoo.org>  Mon, 05 Dec 2016 13:21:17 +0900
+
+openrc (0.21-4) unstable; urgency=medium
+
+  [ Svante Signell ]
+  * Fix upgrade from jessie to stretch by adding openrc.preinst
+    and modifying openrc.postinst for conffile transit (Closes: #840073)
+  * Revert fix for #834014
+
+  [ Adam Borowski ]
+  * Add myself to Uploaders.
+
+ -- Adam Borowski <kilobyte@angband.pl>  Tue, 15 Nov 2016 01:35:20 +0100
+
+openrc (0.21-3) unstable; urgency=medium
+
+  [ Marvin Kohl ]
+  * Fix "fails to install: rc-update: service `transit' does not exist"
+    Exclude transit when removing gentoo init files. (Closes: #834014)
+
+ -- Adam Borowski <kilobyte@angband.pl>  Sat, 24 Sep 2016 02:11:37 +0200
+
+openrc (0.21-2) unstable; urgency=medium
+
+  * Move Recommends init-system-helpers to Pre-Depend (Closes: 829488).
+  * Drop Provides sysv-rc.
+  * Install transit into /etc/init.d directly.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Wed, 27 Jul 2016 16:04:40 +0900
+
+openrc (0.21-1) unstable; urgency=medium
+
+  [ Dmitry Yu Okunev ]
+  * Removed nested functions from lsb2rcconf:main.c
+
+  [ Benda Xu ]
+  * New upstream release
+  * Bump standard to 3.9.8
+  * Switch from dbg to dbgsym packages.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Thu, 23 Jun 2016 10:30:43 +0900
+
+openrc (0.20.4-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Remove diversions to update-rc.d + invoke-rc.d (Closes: #817006).
+
+ -- Adam Borowski <kilobyte@angband.pl>  Tue, 08 Mar 2016 05:17:44 +0100
+
+openrc (0.20.4-2) unstable; urgency=high
+
+  * Bump standard to 3.9.7.
+  * Exclude /etc/init.d/*.dpkg*.
+  * This version of OpenRC issues a warning if boot facility duplication
+    is found (Closes: #738628).
+  * Pass tests on ppc64el and mips64el.
+  * update-rc.d + invoke-rc.d are found in init-system-helpers 1.29.
+    Recommends init-system-helpers 1.29.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Sat, 05 Mar 2016 01:51:21 +0900
+
+openrc (0.20.4-1) unstable; urgency=high
+
+  [ Benda Xu ]
+  * New upstream release.
+    Refresh and remove upstreamed GNU/Hurd patches.
+  * Removed nested functions in the previous release (Closes: #758564).
+  * Enable SELinux, audit and PAM supports on Linux (Closes: #773287).
+    Credits Laurent Bigonville.
+
+  [ Svante Signell ]
+  * Update openrc.postrm and create openrc.preinst to divert
+    update-rc.d + invoke-rc.d files to cooperate with
+    init-system-helpers >=1.25. (Closes: #811708)
+
+ -- Benda Xu <heroxbd@gentoo.org>  Tue, 23 Feb 2016 21:56:27 +0900
+
+openrc (0.18.3-1) unstable; urgency=medium
+
+  [ Dmitry Yu Okunev ]
+  * Remove nested functions (Closes: #765070),
+    merge GNU-kFreeBSD_workaround-nxstack.patch.
+  * Rename static functions "rc_*" to be without "rc_" to pass "make test"
+    (Closes: #763681, #770459)
+
+  [ Benda Xu ]
+  * New upstream release. (Closes: #796287, #766151)
+    - Rename REAMDME to README.md.
+    - Remove upstreamed patches relating to GNU/Hurd and GNU/kFreeBSD.
+  * Document how to disable 20-left-info-blocks and remove experimental
+    claim. (Closes: #771834)
+  * Revise the package descriptions. (Closes: #740611)
+  * Cope with shebang correctly. (Closes: #766153, #766151)
+  * Remove /etc/init.d/transit in postrm purge. (Closes: #740469)
+  * Reuse the _all mechanism that works well on Hurd now. (Closes: #739703)
+  * Bump to standards version 3.9.6.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Sat, 07 Nov 2015 13:44:58 +0900
+
+openrc (0.13.1-4) unstable; urgency=high
+
+  * runtest.sh: expect nested function rc_deptree_remove_loopdependency
+    from dependency loop solver to be listed in the relocation section on
+    some architectures like arm and ppc. (Closes: #763681)
+
+ -- Benda Xu <heroxbd@gentoo.org>  Mon, 27 Oct 2014 01:30:35 +0900
+
+openrc (0.13.1-3) unstable; urgency=medium
+
+  [ Gabriele Giacone ]
+  * Fix postinst, make dangling links presence not fatal (Closes: #765785).
+
+ -- Gabriele Giacone <1o5g4r8o@gmail.com>  Sat, 25 Oct 2014 15:30:56 +0200
+
+openrc (0.13.1-2) unstable; urgency=medium
+
+  [ Steven Chamberlain ]
+  * Add 0210-GNU-kFreeBSD_workaround-nxstack.patch:
+    - loopsolver: don't use executable stacks
+    - fixes a crash on newer versions of kfreebsd that enforce
+      non-executable stacks (Closes: #765070)
+  * Drop unnecessary dependency on libkvm-dev [kfreebsd-any]
+
+ -- Steven Chamberlain <steven@pyro.eu.org>  Sat, 18 Oct 2014 17:28:16 +0100
+
+openrc (0.13.1-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 17 Oct 2014 15:53:29 +0530
+
+openrc (0.12.4+20131230-10) unstable; urgency=medium
+
+  * Revert lsb-deps-on-"all" changes introduced with -9.
+    + Get shutdown immediate back on Hurd (Closes: #739703).
+  * Fix long descriptions. Thanks to Justin B Rye (Closes: #740611).
+
+ -- Gabriele Giacone <1o5g4r8o@gmail.com>  Mon, 10 Mar 2014 00:40:07 +0100
+
+openrc (0.12.4+20131230-9) unstable; urgency=medium
+
+  * Uploading to unstable.
+  * Fix mounting of /run in Hurd & kFreeBSD, thanks to Gabriele's (gg0)
+    patch correction.
+  * Adds 2 new patches for the loop solver:
+    - 0130-option-rc_loopsolver_warnings.patch
+    - 0140-loopsolver-doubleprint-fix.patch
+  * New version of the lsb2rcconf (LSB header support) patch.
+  * Allow non-sh shebang in init.d scripts.
+  * Added 0200-GNU-kFreeBSD_add-missing-files.patch, and as a consequence,
+    build-depends: libkvm-dev [kfreebsd-i386], libkvm-dev [kfreebsd-amd64].
+
+ -- Thomas Goirand <zigo@debian.org>  Sun, 09 Feb 2014 17:34:25 +0800
+
+openrc (0.12.4+20131230-8) experimental; urgency=low
+
+  [ Benda Xu <heroxbd@gentoo.org> ]
+  * control, rules: add librc1-dbg and libeinfo1-dbg.
+  * lsb2rcconf: handle required-stop,should-stop and X-Stop-After.
+  * add runlevel "off" to hold all the shutdown scripts. (Closes: #736384)
+    + openrc.postinst: load scripts from rc6.d into "off" runlevel
+    + rc: enter and leave off runlevel before shutdown/reboot
+    + rules: savecache moved from runlevel shutdown to off
+    + update-rc.d: redirect shutdown to off
+  * rules: clean librc.funcs.hidden.list, the test suite leftover.
+  * control: remove the perl dependency, lsb.pl is superseded by lsb2rcconf.
+  * include the dependency loop detection patch from Dmitry Yu Okunev
+    <dyokunev@ut.mephi.ru>, so that bug #736400 is circumvented.
+
+  [ Thomas Goirand ]
+  * Updated VCS fields to use the new "openrc" Alioth packaging group.
+  * Updated the Maintainer: field to use the Alioth list.
+  * Updates Hurd patch: thanks to Svante Signell <svante.signell@gmail.com> for
+    his work (Closes: #736636).
+  * Stores rc and rcS directly in /etc/init.d in the .deb of OpenRC, rather
+    than using dangerous and useless maintainer scripts (Closes: #736367).
+  * Fix the /etc/init.d/savecache shebang to use openrc-run instead of
+    runscript.
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 27 Jan 2014 15:44:47 +0000
+
+openrc (0.12.4+20131230-7) experimental; urgency=medium
+
+  * lsb2rcconf two updates from Dmitry Yu Okunev <dyokunev@ut.mephi.ru>:
+    - adjust c code style to OpenRC guideline (allowed re-enabled unit tests)
+    - output nothing in absence of LSB header
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 22 Jan 2014 08:24:21 +0000
+
+openrc (0.12.4+20131230-6) experimental; urgency=low
+
+  * Added purge of /etc/runlevels, /lib/rc, and /etc/init.d/{rc,transit,rcS}
+    if OpenRC is purged.
+  * Replaces the lsb.pl patch with an implementation in C, which doesn't need
+    to have /usr mounted early in the boot process (Closes: #734371).
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 20 Jan 2014 15:40:36 +0800
+
+openrc (0.12.4+20131230-5) experimental; urgency=low
+
+  * OpenRC now supports Debian GNU/Hurd! :) Thanks to Svante Signell
+    <svante.signell@gmail.com> for working on this.
+    - Added patches for GNU/Hurd FTBFS
+    - Added patches for GNU/Hurd missing files
+    - Reorganized all patches
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 17 Jan 2014 20:09:55 +0800
+
+openrc (0.12.4+20131230-4) experimental; urgency=medium
+
+  [ Benda Xu ]
+  * Add myself to the uploaders field.
+  * rc-update: Add the feature of removing a service from all runlevels.
+    update-rc.d: make use of the new rc-update feature.
+  * Rename "single" runlevel to "recovery".
+    OpenRC treats single runlevel specially.
+
+  [ Thomas Goirand ]
+  * Added etc/rc.conf.GNU and mk/os-GNU.mk to have a chance to be able to build
+    under GNU Hurd.
+  * Patches librc.h so that it works for Hurd.
+  * Added missing dependency on insserv (Closes: 734283). Thanks to Axel
+    Beckert <abe@debian.org> for finding this out and his bug report.
+  * Now conflicts with file-rc (Closes: #734406), thanks to Michael Gilbert
+    <mgilbert@debian.org> for reporting the problem.
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 17 Jan 2014 07:01:23 +0000
+
+openrc (0.12.4+20131230-3) experimental; urgency=medium
+
+  * Added creation of single user symlinks in /etc/runlevels/single in the
+    postinst script of OpenRC (otherwise single user mode doesn't work).
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 03 Jan 2014 17:10:15 +0000
+
+openrc (0.12.4+20131230-2) experimental; urgency=medium
+
+  * Delete gentoo specific config folders in /etc from the openrc package.
+  * Adds missing /etc/runlevels/single folder. Without it, reinstalling
+    the initscripts package fails.
+  * Warns users about how to do the first reboot when switching from sysv-rc
+    to OpenRC.
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 03 Jan 2014 05:42:12 +0000
+
+openrc (0.12.4+20131230-1) experimental; urgency=low
+
+  * Initial release (Closes: 684396).
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 30 Dec 2013 21:08:24 +0900

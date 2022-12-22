@@ -1,0 +1,7 @@
+0001-no-rpath.patch
+0002-lsb-header-support.patch
+0003-dependency-loop-resolver.patch
+0004-consider-initd-shebangs.patch
+0009-insserv-warning.patch
+0010-cgroups-after-mountkernfs.patch
+ftbfs-gcc10.patch

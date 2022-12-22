@@ -1,0 +1,8 @@
+debian/tmp/bin                /
+debian/tmp/sbin               /
+debian/tmp/lib/rc             /lib
+debian/tmp/etc                /
+debian/tmp/usr/share/man/man8 /usr/share/man
+
+debian/rc		/etc/init.d
+debian/rcS		/etc/init.d

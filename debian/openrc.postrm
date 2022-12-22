@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+if [ "${1}" = "purge" ] ; then
+	rm -rf /lib/rc /etc/runlevels
+	rm -f /etc/init.d/transit
+fi
+
+#DEBHELPER#
+
+exit 0

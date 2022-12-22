@@ -1,0 +1,8 @@
+openrc for Debian
+-----------------
+
+lsb-base: /lib/lsb/init-functions.d/20-left-info-blocks messes up
+the output of OpenRC parallel boot.  To disable this fancy output,
+move the file out of /lib/lsb/init-functions.d.
+
+ -- Benda Xu <heroxbd@gentoo.org>  Wed, 29 Oct 2014 08:54:39 +0900

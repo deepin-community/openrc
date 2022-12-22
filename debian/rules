@@ -1,0 +1,98 @@
+#!/usr/bin/make -f
+#export DH_VERBOSE=1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+DEBVERS		?= $(shell dpkg-parsechangelog | sed -n -e 's/^Version: //p')
+VERSION		?= $(shell echo '$(DEBVERS)' | sed -e 's/^[[:digit:]]*://' -e 's/[-].*//')
+DEBFLAVOR	?= $(shell dpkg-parsechangelog | grep -E ^Distribution: | cut -d" " -f2)
+DEBPKGNAME	?= $(shell dpkg-parsechangelog | grep -E ^Source: | cut -d" " -f2)
+DEBIAN_BRANCH	?= $(shell cat debian/gbp.conf | grep debian-branch | cut -d'=' -f2 | awk '{print $1}')
+GIT_TAG		?= $(shell echo '$(VERSION)' | sed -e 's/~/_/')
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+DEB_HOST_ARCH_OS   ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+DH_INSTALL_FILES = $(basename $(wildcard debian/*.install.in) $(wildcard debian/*.links.in))
+
+export LIBDIR = /usr/lib/$(DEB_HOST_MULTIARCH)
+export SHLIBDIR = /lib/$(DEB_HOST_MULTIARCH)
+export LIBNAME = lib
+export LIBEXECDIR = /lib/rc
+export STRIP_BINARY = no
+
+ifeq (linux,$(DEB_HOST_ARCH_OS))
+export MKAUDIT = yes
+export MKPAM = pam
+export MKSELINUX = yes
+endif
+
+%:
+	dh $@
+
+%.install: %.install.in
+	sed -e 's;@SHLIBDIR@;$(SHLIBDIR);g' -e 's;@LIBDIR@;$(LIBDIR);g' <$< >$@
+
+%.links: %.links.in
+	sed -e 's;@SHLIBDIR@;$(SHLIBDIR);g' -e 's;@LIBDIR@;$(LIBDIR);g' <$< >$@
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f $(DH_INSTALL_FILES)
+	rm -f src/test/librc.funcs.hidden.list
+
+install-arch: build-arch $(DH_INSTALL_FILES)
+	dh $@ $(DH_OPTIONS)
+
+install-indep: build-indep $(DH_INSTALL_FILES)
+	dh $@ $(DH_OPTIONS)
+
+override_dh_installmenu:
+	# These are symlinks for compatibility reasons, and we don't want
+	# them in Debian.
+	for file in start-stop-daemon runscript rc service ; do \
+		rm -f $(CURDIR)/debian/openrc/sbin/$${file} ; \
+	done
+
+	# As openrc start-stop-daemon executable is removed above, we don't
+	# need to install that pam service.
+	rm -rf $(CURDIR)/debian/openrc/etc/pam.d/
+
+	# These need to be removed, the same way as other stuff above
+	for file in service.8 service.8.gz start-stop-daemon.8 start-stop-daemon.8.gz ; do \
+		rm -f $(CURDIR)/debian/openrc/usr/share/man/man8/$${file} ; \
+	done
+
+	# These are Gentoo specific stuff, we don't want them
+	set -e && for i in sysctl.d local.d conf.d ; do \
+		rm -rf $(CURDIR)/debian/openrc/etc/$${i} ; \
+	done
+
+	# We don't want the Gentoo init scripts, but only want savecache and cgroups to stay #960183
+	find $(CURDIR)/debian/openrc/etc/init.d/* \
+		\! -type d \! -regex ".*/\(savecache\|cgroups\|rcS?\)" -delete
+
+	for dir in boot default sysinit shutdown; do \
+		rm -f $(CURDIR)/debian/openrc/etc/runlevels/$${dir}/* ; \
+	done
+
+get-upstream-sources:
+	# There's also a mirror at: git://git.overlays.gentoo.org/proj/openrc.git
+	git remote add upstream git://github.com/OpenRC/openrc.git || true
+	git fetch upstream
+	if ! git checkout master ; then \
+		echo "No upstream branch: checking out" ; \
+		git checkout -b master upstream/master ; \
+	fi
+	git checkout $(DEBIAN_BRANCH)
+
+make-orig-file:
+	if [ ! -f ../$(DEBPKGNAME)_$(VERSION).orig.tar.xz ] ; then \
+		git archive --prefix=$(DEBPKGNAME)-$(GIT_TAG)/ $(GIT_TAG) | xz >../$(DEBPKGNAME)_$(VERSION).orig.tar.xz ; \
+	fi
+	[ ! -e ../build-area ] && mkdir ../build-area || true
+	[ ! -e ../build-area/$(DEBPKGNAME)_$(VERSION).orig.tar.xz ] && cp ../$(DEBPKGNAME)_$(VERSION).orig.tar.xz ../build-area || true
+
+.PHONY: override_dh_auto_clean install-arch install-indep get-upstream-sources make-orig-file

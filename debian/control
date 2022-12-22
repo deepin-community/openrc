@@ -1,0 +1,110 @@
+Source: openrc
+Section: admin
+Priority: optional
+Maintainer: OpenRC Debian Maintainers <openrc@packages.debian.org>
+Uploaders: Thomas Goirand <zigo@debian.org>,
+           Benda Xu <heroxbd@gentoo.org>,
+           Mo Zhou <cdluminate@gmail.com>
+Build-Depends: debhelper (>= 11),
+               libaudit-dev [linux-any],
+               libpam0g-dev [linux-any],
+               libselinux1-dev [linux-any]
+Standards-Version: 4.5.0
+Rules-Requires-Root: no
+Homepage: https://github.com/openrc/openrc
+Vcs-Git: https://salsa.debian.org/debian/openrc.git
+Vcs-Browser: https://salsa.debian.org/debian/openrc
+
+Package: openrc
+Architecture: any
+Conflicts: file-rc, sysv-rc
+Replaces: sysv-rc
+Depends: insserv, ${misc:Depends}, ${shlibs:Depends}
+Suggests: sysvinit-core, policycoreutils [linux-any]
+Multi-Arch: foreign
+Description: dependency based service manager (runlevel change mechanism)
+ OpenRC is a dependency based service manager. It provides support for System V
+ init, for booting, changing runlevels, starting and stopping services, and
+ shutting down.
+ .
+ Originally written as a Gentoo project, OpenRC aims at being
+ platform-agnostic.  It works equally well on Linux, BSD and Hurd.
+ It supports the traditional init system in Debian in addition to many
+ alternatives.  OpenRC is implemented in C in a small, simple and
+ efficient way, making it easy to understand, extend and reuse.
+ .
+ This package provides the runlevel change mechanism.
+
+Package: librc1
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Description: dependency based service manager (runtime library)
+ OpenRC is a dependency based service manager. It provides support for System V
+ init, for booting, changing runlevels, starting and stopping services, and
+ shutting down.
+ .
+ Originally written as a Gentoo project, OpenRC aims at being
+ platform-agnostic.  It works equally well on Linux, BSD and Hurd.
+ It supports the traditional init system in Debian in addition to many
+ alternatives.  OpenRC is implemented in C in a small, simple and
+ efficient way, making it easy to understand, extend and reuse.
+ .
+ This package provides the runtime library.
+
+Package: librc-dev
+Architecture: any
+Section: libdevel
+Depends: librc1 (=${binary:Version}), ${misc:Depends}
+Multi-Arch: same
+Description: dependency based service manager (runtime development)
+ OpenRC is a dependency based service manager. It provides support for System V
+ init, for booting, changing runlevels, starting and stopping services, and
+ shutting down.
+ .
+ Originally written as a Gentoo project, OpenRC aims at being
+ platform-agnostic.  It works equally well on Linux, BSD and Hurd.
+ It supports the traditional init system in Debian in addition to many
+ alternatives.  OpenRC is implemented in C in a small, simple and
+ efficient way, making it easy to understand, extend and reuse.
+ .
+ This package provides development files for the runtime library.
+
+Package: libeinfo1
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Description: dependency based service manager (pretty console display library)
+ OpenRC is a dependency based service manager. It provides support for System V
+ init, for booting, changing runlevels, starting and stopping services, and
+ shutting down.
+ .
+ Originally written as a Gentoo project, OpenRC aims at being
+ platform-agnostic.  It works equally well on Linux, BSD and Hurd.
+ It supports the traditional init system in Debian in addition to many
+ alternatives.  OpenRC is implemented in C in a small, simple and
+ efficient way, making it easy to understand, extend and reuse.
+ .
+ This package provides a runtime library that supports displaying messages on
+ the console.
+
+Package: libeinfo-dev
+Architecture: any
+Section: libdevel
+Depends: libeinfo1 (=${binary:Version}), ${misc:Depends}
+Multi-Arch: same
+Description: dependency based service manager (pretty console display development)
+ OpenRC is a dependency based service manager. It provides support for System V
+ init, for booting, changing runlevels, starting and stopping services, and
+ shutting down.
+ .
+ Originally written as a Gentoo project, OpenRC aims at being
+ platform-agnostic.  It works equally well on Linux, BSD and Hurd.
+ It supports the traditional init system in Debian in addition to many
+ alternatives.  OpenRC is implemented in C in a small, simple and
+ efficient way, making it easy to understand, extend and reuse.
+ .
+ This package provides a development library that supports displaying messages
+ on the console.

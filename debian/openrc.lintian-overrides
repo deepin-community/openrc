@@ -1,0 +1,15 @@
+package-contains-empty-directory lib/rc/tmp/
+init.d-script-does-not-implement-required-option etc/init.d/savecache stop
+init.d-script-does-not-implement-required-option etc/init.d/savecache restart
+init.d-script-does-not-implement-required-option etc/init.d/savecache force-reload
+init.d-script-does-not-implement-optional-option etc/init.d/savecache status
+init.d-script-does-not-implement-required-option etc/init.d/cgroups stop
+init.d-script-does-not-implement-required-option etc/init.d/cgroups restart
+init.d-script-does-not-implement-required-option etc/init.d/cgroups force-reload
+script-in-etc-init.d-not-registered-via-update-rc.d etc/init.d/savecache
+script-in-etc-init.d-not-registered-via-update-rc.d etc/init.d/cgroups
+missing-systemd-service-for-init.d-script cgroups
+missing-systemd-service-for-init.d-script savecache
+init.d-script-does-not-source-init-functions etc/init.d/cgroups                                
+init.d-script-does-not-source-init-functions etc/init.d/savecache
+init.d-script-missing-lsb-section etc/init.d/cgroups

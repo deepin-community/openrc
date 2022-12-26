@@ -1,6 +1,6 @@
 *.gz
 
-*.diff
+
 *.patch
 *.orig
 *.rej

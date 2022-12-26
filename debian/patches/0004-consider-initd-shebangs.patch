@@ -1,0 +1,33 @@
+From: Gabriele Giacone <1o5g4r8o@gmail.com>
+Date: Wed, 4 Jan 2017 21:42:01 +0900
+Subject: consider-initd-shebangs
+
+Description: Allow non-sh shebang in init.d scripts.
+ If /bin/sh is not detected in initscript shebang, to avoid for instance
+ bashisms /bin/sh can't understand, runscript re-runs itself with non-sh
+ shell. This workarounds failures starting non-sh initscript.
+---
+ sh/openrc-run.sh.in | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/sh/openrc-run.sh.in b/sh/openrc-run.sh.in
+index e0aa8f2..e7fb495 100644
+--- a/sh/openrc-run.sh.in
++++ b/sh/openrc-run.sh.in
+@@ -309,7 +309,15 @@ while [ -n "$1" ]; do
+ 		cd /
+ 		continue
+ 	elif [ -n "${lsbh}" ]; then
+-		. "${RC_SERVICE}"
++		read -r shebang < "${RC_SERVICE}"
++		case "${shebang}" in
++		*runscript*|*openrc-run*)
++			. "${RC_SERVICE}"
++			;;
++		*)
++			exec "${RC_SERVICE}" $*
++			;;
++		esac
+ 		shift
+ 		continue
+ 	fi

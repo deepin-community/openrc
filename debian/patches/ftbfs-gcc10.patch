@@ -1,0 +1,17 @@
+Description: fix FTBFS with gcc-10
+Origin: upstream, 375ef42393f3dc6edbaa2cb70c79b2366072db38
+Bug-Debian: https://bugs.debian.org/957642
+
+--- openrc-0.42.orig/src/rc/rc-logger.h
++++ openrc-0.42/src/rc/rc-logger.h
+@@ -13,8 +13,8 @@
+ #ifndef RC_LOGGER_H
+ #define RC_LOGGER_H
+ 
+-pid_t rc_logger_pid;
+-int rc_logger_tty;
++extern pid_t rc_logger_pid;
++extern int rc_logger_tty;
+ extern bool rc_in_logger;
+ 
+ void rc_logger_open(const char *runlevel);

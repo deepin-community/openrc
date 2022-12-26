@@ -1,0 +1,28 @@
+From: Adam Borowski <kilobyte@angband.pl>
+Date: Sun, 21 Oct 2018 18:14:01 +0800
+Subject: Add bogus LSB headers to savecache to shut up insserv.
+
+---
+ init.d/savecache.in | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/init.d/savecache.in b/init.d/savecache.in
+index 74f1779..a2875f4 100644
+--- a/init.d/savecache.in
++++ b/init.d/savecache.in
+@@ -11,6 +11,15 @@
+ 
+ description="Saves the caches OpenRC uses to non volatile storage"
+ 
++# Bogus LSB headers to silence insserv warnings.
++### BEGIN INIT INFO
++# Provides:          savecache
++# Required-Start:
++# Required-Stop:
++# Default-Start:
++# Default-Stop:
++### END INIT INFO
++
+ start()
+ {
+ 	if [ -e "$RC_SVCDIR"/clock-skewed ]; then

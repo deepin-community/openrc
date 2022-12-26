@@ -1,0 +1,23 @@
+From: Benda Xu <heroxbd@gentoo.org>
+Date: Fri, 15 May 2020 15:49:40 +0800
+Subject: cgroups after mountkernfs
+
+Description: cgroups starts after sysfs, named mountkernfs in Debian.
+Forwarded: not-needed
+---
+ init.d/cgroups.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/init.d/cgroups.in b/init.d/cgroups.in
+index 3d5bfa7..d421944 100644
+--- a/init.d/cgroups.in
++++ b/init.d/cgroups.in
+@@ -16,7 +16,7 @@ cgroup_opts=nodev,noexec,nosuid
+ depend()
+ {
+ 	keyword -docker -prefix -systemd-nspawn -vserver
+-	after sysfs
++	after sysfs mountkernfs
+ }
+ 
+ cgroup1_base()
